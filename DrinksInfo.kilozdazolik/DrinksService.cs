@@ -6,11 +6,12 @@ namespace DrinksInfo.kilozdazolik;
 public class DrinksService
 {
     private readonly HttpClient _httpClient;
+    private readonly string _baseApiUrl = "https://www.thecocktaildb.com/api/json/v1/1/";
 
     public DrinksService()
     {
         _httpClient = new HttpClient();
-        _httpClient.BaseAddress = new Uri("https://www.thecocktaildb.com/api/json/v1/1/");
+        _httpClient.BaseAddress = new Uri(_baseApiUrl);
     }
 
     private async Task<T?> GetAsync<T>(string endpoint)
