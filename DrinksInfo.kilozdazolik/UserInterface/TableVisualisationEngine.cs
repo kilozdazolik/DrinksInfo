@@ -1,5 +1,6 @@
 ﻿using Spectre.Console;
 using DrinksInfo.kilozdazolik.Models;
+using DrinksInfo.kilozdazolik.Managers;
 
 namespace DrinksInfo.kilozdazolik;
 
@@ -40,13 +41,15 @@ public class TableVisualisationEngine
             await DisplayDrinkImageAsync(detail.ImageThumb);
         }
 
+        FavoritesManager.IncrementViewCount(detail.Id);
+        
         AnsiConsole.MarkupLine($"\n[bold green]--- {detail.Name} ---[/]");
         AnsiConsole.MarkupLine($"[yellow]Category:[/]\t\t{detail.Category}");
         AnsiConsole.MarkupLine($"[yellow]Alcoholic:[/]\t{detail.Alcohol}");
         AnsiConsole.MarkupLine($"[yellow]Served In:[/]\t{detail.Glass}");
         AnsiConsole.MarkupLine($"[yellow]IBA:[/]\t\t{detail.IBA ?? "N/A"}");
 
-        AnsiConsole.WriteLine("\n[bold]Ingredients:[/]");
+        AnsiConsole.MarkupLine("\n[bold yellow]Ingredients:[/]");
         
         for (int i = 1; i <= 15; i++)
         {
@@ -60,9 +63,17 @@ public class TableVisualisationEngine
         }
         
         AnsiConsole.MarkupLine(detail.Instructions);
+        int viewCount = FavoritesManager.GetViewCount(detail.Id); 
+        AnsiConsole.MarkupLine($"[yellow]View Count:[/]\t{viewCount}");
+
         
-        AnsiConsole.MarkupLine("\n[grey]Press any key to return to the main menu...[/]");
-        Console.ReadKey(true);
+        var continuePrompt = AnsiConsole.Prompt(new SelectionPrompt<string>().Title("Do you want to add drink to favourites?")
+            .AddChoices(new[] { "Yes", "No" }));
+
+        if (continuePrompt == "Yes")
+        {
+            FavoritesManager.AddFavorite(detail);
+        }
     }
     
     private async Task DisplayDrinkImageAsync(string imageUrl)
