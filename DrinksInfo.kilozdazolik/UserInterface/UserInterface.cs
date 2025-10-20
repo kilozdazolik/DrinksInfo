@@ -2,7 +2,6 @@
 using Spectre.Console;
 using DrinksInfo.kilozdazolik.Enums;
 using DrinksInfo.kilozdazolik.Managers;
-using DrinksInfo.kilozdazolik.Models;
 
 namespace DrinksInfo.kilozdazolik;
 
