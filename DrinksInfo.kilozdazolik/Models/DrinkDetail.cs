@@ -16,7 +16,7 @@ public class DrinkDetail
 
     [JsonPropertyName("strCategory")] public string Category { get; set; }
 
-    [JsonPropertyName("strIBA")] public string IBA { get; set; }
+    [JsonPropertyName("strIBA")] public string Iba { get; set; }
 
     [JsonPropertyName("strAlcoholic")] public string Alcohol { get; set; }
 
