@@ -47,7 +47,7 @@ public class TableVisualisationEngine
         AnsiConsole.MarkupLine($"[yellow]Category:[/]\t\t{detail.Category}");
         AnsiConsole.MarkupLine($"[yellow]Alcoholic:[/]\t{detail.Alcohol}");
         AnsiConsole.MarkupLine($"[yellow]Served In:[/]\t{detail.Glass}");
-        AnsiConsole.MarkupLine($"[yellow]IBA:[/]\t\t{detail.IBA ?? "N/A"}");
+        AnsiConsole.MarkupLine($"[yellow]IBA:[/]\t\t{detail.Iba ?? "N/A"}");
 
         AnsiConsole.MarkupLine("\n[bold yellow]Ingredients:[/]");
         
