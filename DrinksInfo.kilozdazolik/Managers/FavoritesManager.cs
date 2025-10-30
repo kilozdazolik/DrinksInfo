@@ -3,16 +3,16 @@ using Spectre.Console;
 
 namespace DrinksInfo.kilozdazolik.Managers;
 
-public static class FavoritesManager
+public class FavoritesManager
 {
-    private static List<DrinkDetail> _favoriteDrinks = new();
-    private static TableVisualisationEngine _tableVisualisationEngine = new();
-    private static Dictionary<string, int> _viewCounts = new Dictionary<string, int>();
+    private static readonly List<DrinkDetail> FavoriteDrinks = new();
+    private static readonly TableVisualisationEngine TableVisualisationEngine = new();
+    private static readonly Dictionary<string, int> ViewCounts = new();
     public static void AddFavorite(DrinkDetail drink)
     {
-        if (!_favoriteDrinks.Any(d => d.Id == drink.Id))
+        if (FavoriteDrinks.All(d => d.Id != drink.Id))
         {
-            _favoriteDrinks.Add(drink);
+            FavoriteDrinks.Add(drink);
             AnsiConsole.Markup($"[bold green]Added favorite drink {drink.Name}[/]");
         }
         else
@@ -21,14 +21,14 @@ public static class FavoritesManager
         }
     }
 
-    public static List<DrinkDetail> GetFavoriteDrinks()
+    private static List<DrinkDetail> GetFavoriteDrinks()
     {
-        return _favoriteDrinks;
+        return FavoriteDrinks;
     }
     
     public static void ShowFavoriteDrinks()
     {
-        var favoriteDetails = FavoritesManager.GetFavoriteDrinks();
+        var favoriteDetails = GetFavoriteDrinks();
 
         if (favoriteDetails.Count == 0)
         {
@@ -38,33 +38,25 @@ public static class FavoritesManager
         
         var favoriteListItems = favoriteDetails.Select(d => new DrinkListItem
         {
-            ID = d.Id,
+            Id = d.Id,
             Name = d.Name,
             Category = d.Category,
             Alcoholic = d.Alcohol
         }).ToList();
         
-        _tableVisualisationEngine.ShowTable(favoriteListItems, "Favorite Drinks");
+        TableVisualisationEngine.ShowTable(favoriteListItems, "Favorite Drinks");
     }
     
     public static void IncrementViewCount(string drinkId)
     {
-        if (_viewCounts.ContainsKey(drinkId))
+        if (!ViewCounts.TryAdd(drinkId, 1))
         {
-            _viewCounts[drinkId]++;
-        }
-        else
-        {
-            _viewCounts.Add(drinkId, 1);
+            ViewCounts[drinkId]++;
         }
     }
     
     public static int GetViewCount(string drinkId)
     {
-        if (_viewCounts.ContainsKey(drinkId))
-        {
-            return _viewCounts[drinkId];
-        }
-        return 0;
+        return ViewCounts.GetValueOrDefault(drinkId, 0);
     }
 }

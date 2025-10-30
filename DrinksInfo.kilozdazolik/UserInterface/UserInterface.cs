@@ -6,7 +6,7 @@ using DrinksInfo.kilozdazolik.Managers;
 
 namespace DrinksInfo.kilozdazolik;
 
-public class UserInterface
+public abstract class UserInterface
 {
     internal static async Task MainMenu()
     {
@@ -28,6 +28,7 @@ public class UserInterface
                     .Title("What do you want to do [green]next[/]?")
                     .AddChoices(choices.Keys));
             var choice = choices[choiceText];
+            AnsiConsole.Clear();
             switch (choice)
             {
                 case MenuAction.ViewCategories:

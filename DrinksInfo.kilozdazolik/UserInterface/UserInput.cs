@@ -5,7 +5,7 @@ namespace DrinksInfo.kilozdazolik;
 
 public class UserInput
 {
-    private DrinksService _drinksService = new();
+    private readonly DrinksService _drinksService = new();
 
     internal async Task<string> GetCategoriesInputAsync()
     {

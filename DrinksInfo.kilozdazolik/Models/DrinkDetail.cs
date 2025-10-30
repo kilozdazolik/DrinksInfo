@@ -3,7 +3,7 @@
 
 namespace DrinksInfo.kilozdazolik.Models;
 
-public class DrinkDetails
+public  class DrinkDetails
 {
     [JsonPropertyName("drinks")] public List<DrinkDetail> DrinksList { get; set; }
 }

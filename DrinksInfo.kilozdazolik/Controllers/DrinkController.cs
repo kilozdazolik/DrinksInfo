@@ -1,28 +1,28 @@
 ﻿namespace DrinksInfo.kilozdazolik.Controllers;
 
-public class DrinkController
+public static class DrinkController
 {
-    private static TableVisualisationEngine _tableVisualisationEngine = new();
-    private static DrinksService _drinksService = new();
-    private static UserInput _userInput = new();
+    private static readonly TableVisualisationEngine TableVisualisationEngine = new();
+    private static readonly DrinksService DrinksService = new();
+    private static readonly UserInput UserInput = new();
 
     internal static async Task ViewCategories()
     {
-        var categories = await _drinksService.GetCategoriesAsync();
-        _tableVisualisationEngine.ShowTable(categories, "Categories");
+        var categories = await DrinksService.GetCategoriesAsync();
+        TableVisualisationEngine.ShowTable(categories, "Categories");
     }
 
     internal static async Task ViewDrinks()
     {
-        var category = await _userInput.GetCategoriesInputAsync();
-        var drinks = await _drinksService.GetDrinksByCategoryAsync(category);
-        _tableVisualisationEngine.ShowTable(drinks, "Drinks");
+        var category = await UserInput.GetCategoriesInputAsync();
+        var drinks = await DrinksService.GetDrinksByCategoryAsync(category);
+        TableVisualisationEngine.ShowTable(drinks, "Drinks");
     }
 
     internal static async Task ViewDrinkDetails()
     {
-        var selectedDrink = await _userInput.GetDrinkInputAsync();
-        var drinkDetail = await _drinksService.GetDrinkDetailAsync(selectedDrink.Id);
-        await _tableVisualisationEngine.ShowDrinkDetailAsync(drinkDetail);
+        var selectedDrink = await UserInput.GetDrinkInputAsync();
+        var drinkDetail = await DrinksService.GetDrinkDetailAsync(selectedDrink.Id);
+        await TableVisualisationEngine.ShowDrinkDetailAsync(drinkDetail);
     }
 }

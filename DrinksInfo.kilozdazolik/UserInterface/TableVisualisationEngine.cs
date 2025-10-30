@@ -6,7 +6,7 @@ namespace DrinksInfo.kilozdazolik;
 
 public class TableVisualisationEngine
 {
-    private static DrinksService _drinksService = new();
+    private static readonly DrinksService DrinksService = new();
     public void ShowTable<T>(List<T> data, string tableName = "") where T : class
     {
         var table = new Table();
@@ -78,7 +78,7 @@ public class TableVisualisationEngine
     
     private async Task DisplayDrinkImageAsync(string imageUrl)
     {
-        var tempFilePath = await _drinksService.DownloadImageAsync(imageUrl);
+        var tempFilePath = await DrinksService.DownloadImageAsync(imageUrl);
         
         if (tempFilePath != null)
         {
