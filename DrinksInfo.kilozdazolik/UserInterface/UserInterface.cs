@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using DrinksInfo.kilozdazolik.Controllers;
 using Spectre.Console;
 using DrinksInfo.kilozdazolik.Enums;
 using DrinksInfo.kilozdazolik.Managers;
@@ -7,10 +8,6 @@ namespace DrinksInfo.kilozdazolik;
 
 public class UserInterface
 {
-    private static TableVisualisationEngine _tableVisualisationEngine = new();
-    private static DrinksService _drinksService = new();
-    private static UserInput _userInput = new();
-
     internal static async Task MainMenu()
     {
         AnsiConsole.MarkupLine("Welcome to the DrinksInfo!");
@@ -34,18 +31,13 @@ public class UserInterface
             switch (choice)
             {
                 case MenuAction.ViewCategories:
-                    var categories = await _drinksService.GetCategoriesAsync();
-                    _tableVisualisationEngine.ShowTable(categories, "Categories");
+                    await DrinkController.ViewCategories();
                     break;
                 case MenuAction.ViewDrinks:
-                    var category = await _userInput.GetCategoriesInputAsync();
-                    var drinks = await _drinksService.GetDrinksByCategoryAsync(category);
-                    _tableVisualisationEngine.ShowTable(drinks, "Drinks");
+                    await DrinkController.ViewDrinks();
                     break;
                 case MenuAction.ViewDrinkDetails:
-                    var selectedDrink = await _userInput.GetDrinkInputAsync();
-                    var drinkDetail = await _drinksService.GetDrinkDetailAsync(selectedDrink.Id);
-                    await _tableVisualisationEngine.ShowDrinkDetailAsync(drinkDetail);
+                    await DrinkController.ViewDrinkDetails();
                     break;
                 case MenuAction.ViewFavorite:
                     FavoritesManager.ShowFavoriteDrinks();

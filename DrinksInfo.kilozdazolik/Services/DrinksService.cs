@@ -1,7 +1,5 @@
 ﻿using System.Net.Http.Json;
-using System.Text.RegularExpressions;
 using DrinksInfo.kilozdazolik.Models;
-using Spectre.Console;
 
 namespace DrinksInfo.kilozdazolik;
 
